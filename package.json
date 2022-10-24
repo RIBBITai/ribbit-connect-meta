@@ -1,0 +1,26 @@
+{
+  "name": "ribbit-connect-meta",
+  "version": "1.0.0",
+  "description": "Meta library for including RIBBIT CONNECT within your webpage.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darrylhuffman/ribbit-connect-meta.git"
+  },
+  "keywords": [
+    "ribbit",
+    "ribbit",
+    "connect",
+    "bank",
+    "link"
+  ],
+  "author": "Darryl Huffman <darryl@ribbit.ai>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darrylhuffman/ribbit-connect-meta/issues"
+  },
+  "homepage": "https://github.com/darrylhuffman/ribbit-connect-meta#readme"
+}
