@@ -1,6 +1,6 @@
 {
   "name": "ribbit-connect-meta",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Meta library for including RIBBIT CONNECT within your webpage.",
   "main": "index.js",
   "scripts": {
