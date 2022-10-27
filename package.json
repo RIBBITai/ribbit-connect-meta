@@ -12,10 +12,8 @@
   },
   "keywords": [
     "ribbit",
-    "ribbit",
-    "connect",
-    "bank",
-    "link"
+    "ribbit-connect",
+    "connect"
   ],
   "author": "Darryl Huffman <darryl@ribbit.ai>",
   "license": "ISC",

@@ -22,7 +22,9 @@ export default class MetaRIBBITConnect {
         language = 'en',
         width = minWidth,
         settings,
-        inline
+        inline,
+        environment='Production',
+        environmentOverrideURL
     }){
         this.token = token
         this.id = 'RIBBIT-' + this.token
@@ -31,6 +33,7 @@ export default class MetaRIBBITConnect {
         this.isMobile = window.innerWidth <= this.settings.mobileWidth
         this.isInline = inline === true ? true : false;
         this.language = language;
+        this.environment = environment;
         if(!settings || settings.resize == null) this.settings.resize = this.isInline
 
         if(!this.#initialized) this.initFrame();
@@ -44,7 +47,19 @@ export default class MetaRIBBITConnect {
         this.#initialized = true
         const iFrame = document.createElement('iframe')
         //const server = 'https://localhost:44345'
-        const server = 'https://rbtwebportaldev-test2.azurewebsites.net'
+
+        let server = ''
+        if(!environmentOverrideURL){
+            switch(this.environment){
+                case 'Production': server = 'https://portal.ribbit.ai'; break;
+                case 'Development': server = 'https://playground.ribbit.ai'; break;
+                case 'Test': server = 'https://test.ribbit.ai'; break;
+            }
+        } else {
+            server = environmentOverrideURL;
+        }
+
+
         this.iFrameMessageKey = new Date().getTime() + ''
         iFrame.setAttribute('src', server+'/CONNECT/Frame?token=' + this.token + '&language=' + this.language + '&messagekey=' + this.iFrameMessageKey)
         iFrame.id = this.id
