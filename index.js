@@ -34,6 +34,7 @@ export default class MetaRIBBITConnect {
         this.isInline = inline === true ? true : false;
         this.language = language;
         this.environment = environment;
+        this.environmentOverrideURL = environmentOverrideURL;
         if(!settings || settings.resize == null) this.settings.resize = this.isInline
 
         if(!this.#initialized) this.initFrame();
@@ -49,14 +50,15 @@ export default class MetaRIBBITConnect {
         //const server = 'https://localhost:44345'
 
         let server = ''
-        if(!environmentOverrideURL){
+        if(!this.environmentOverrideURL){
             switch(this.environment){
                 case 'Production': server = 'https://portal.ribbit.ai'; break;
                 case 'Development': server = 'https://playground.ribbit.ai'; break;
                 case 'Test': server = 'https://test.ribbit.ai'; break;
+                case 'Staging': server = 'https://test.ribbit.ai'; break;
             }
         } else {
-            server = environmentOverrideURL;
+            server = this.environmentOverrideURL;
         }
 
 
