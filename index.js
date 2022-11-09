@@ -1,7 +1,8 @@
 const minWidth = 380,
-    startHeight = 400,
+    startHeight = 640,
     defaultSettings = {
-        resize: true,
+        resize: false,
+        closeButton: false,
         mobileWidth: 650,
         canOpenNewWindows: true
     } 
@@ -9,7 +10,7 @@ const minWidth = 380,
 export default class MetaRIBBITConnect {
     settings = {}
 
-    CONNECTEvents = ['launch','exit','complete','bankLoginSelected','manualEnrollmentSelected','noAccountsFound','bankNotFound','bankLogin','linkOpen']
+    CONNECTEvents = ['launch','exit','complete','bankLoginSelected','manualEnrollmentSelected','noAccountsFound','bankNotFound','bankLogin','bankManual', 'linkOpen']
 
     #messageCallbacks = []
     #width = minWidth
@@ -23,24 +24,29 @@ export default class MetaRIBBITConnect {
         width = minWidth,
         settings,
         inline,
+        fullscreen = false,
         environment='Production',
         environmentOverrideURL
     }){
         this.token = token
         this.id = 'RIBBIT-' + this.token
         this.settings = { ...defaultSettings, ...settings }
+
         this.#width = width > minWidth ? width : minWidth
+        this.#height = Math.min(640, window.innerHeight * .9);
+
         this.isMobile = window.innerWidth <= this.settings.mobileWidth
         this.isInline = inline === true ? true : false;
+        this.fullscreen = fullscreen;
+
         this.language = language;
         this.environment = environment;
         this.environmentOverrideURL = environmentOverrideURL;
-        if(!settings || settings.resize == null) this.settings.resize = this.isInline
+        //if(!settings || settings.resize == null) this.settings.resize = this.isInline
 
         if(!this.#initialized) this.initFrame();
         this.sendMessage('isMobile', this.isMobile)
         this.sendMessage('isInline', this.isInline)
-        if(!this.isMobile && this.settings.resize == false) this.#height = Math.min(640, window.innerHeight * .9);
         this.#applyStyles();
     }
 
@@ -90,7 +96,7 @@ export default class MetaRIBBITConnect {
     }
 
     updateClassName = () => {
-        this.iFrame.className = 'RIBBIT-iFrame' + (this.isMobile ? ' mobile' : '')
+        this.iFrame.className = 'RIBBIT-iFrame' + (this.isMobile || this.fullscreen ? ' RIBBIT-iFrame-mobile' : '') + (this.fullscreen ? ' RIBBIT-iFrame-fullscreen' : '')
     }
 
     #initStyles = () => {
@@ -102,7 +108,7 @@ export default class MetaRIBBITConnect {
     #applyStyles = () => {
         const css = `
             #${this.id} {
-                height: ${this.#height}px;
+                ${this.#height ? 'height: ' + this.#height + 'px;' : ''}
                 width: ${this.#width}px;
             }
         `
@@ -154,6 +160,18 @@ export default class MetaRIBBITConnect {
             case 'environmentCheck':
                 this.sendMessage('isMobile', window.innerWidth <= this.settings.mobileWidth)
                 this.sendMessage('isInline', this.isInline)
+                break;
+            case 'startupParams':
+                this.sendMessage('startupParams', {
+                    token: this.token,
+                    settings: this.settings,
+                    isMobile: this.isMobile,
+                    isInline: this.isInline,
+                    fullscreen: this.fullscreen,
+                    language: this.language,
+                    environment: this.environment,
+                    environmentOverrideURL: this.environmentOverrideURL
+                })
                 break;
         }
     }
