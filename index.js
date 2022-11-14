@@ -179,5 +179,4 @@ export default class MetaRIBBITConnect {
     onMessage = (callback) => { // outside event
         this.#messageCallbacks.push(callback)
     }
-
 }
