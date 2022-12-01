@@ -2,9 +2,11 @@
   "name": "ribbit-connect-meta",
   "version": "1.0.4",
   "description": "Meta library for including RIBBIT CONNECT within your webpage.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --out-dir dist --copy-files"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,21 @@
   "bugs": {
     "url": "https://github.com/RIBBITai/ribbit-connect-meta/issues"
   },
-  "homepage": "https://github.com/RIBBITai/ribbit-connect-meta#readme"
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "homepage": "https://github.com/RIBBITai/ribbit-connect-meta#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "core-js": "^3.26.1"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^8.2.5",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
 }
