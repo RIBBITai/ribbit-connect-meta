@@ -26,6 +26,7 @@ const minWidth = 380,
     mobileWidth: 650,
     canOpenNewWindows: true
   };
+var _handledEvents = /*#__PURE__*/new WeakMap();
 var _messageCallbacks = /*#__PURE__*/new WeakMap();
 var _width = /*#__PURE__*/new WeakMap();
 var _height = /*#__PURE__*/new WeakMap();
@@ -49,6 +50,10 @@ class MetaRIBBITConnect {
     } = _ref;
     _defineProperty(this, "settings", {});
     _defineProperty(this, "CONNECTEvents", ['launch', 'exit', 'complete', 'bankLoginSelected', 'manualEnrollmentSelected', 'noAccountsFound', 'bankNotFound', 'bankLogin', 'bankManual', 'linkOpen']);
+    _classPrivateFieldInitSpec(this, _handledEvents, {
+      writable: true,
+      value: []
+    });
     _classPrivateFieldInitSpec(this, _messageCallbacks, {
       writable: true,
       value: []
@@ -116,6 +121,7 @@ class MetaRIBBITConnect {
     });
     _defineProperty(this, "onCallbacks", []);
     _defineProperty(this, "on", (eventName, callback) => {
+      _classPrivateFieldGet(this, _handledEvents).push(eventName);
       this.onCallbacks.push({
         eventName,
         callback
@@ -193,7 +199,8 @@ class MetaRIBBITConnect {
               fullscreen: this.fullscreen,
               language: this.language,
               environment: this.environment,
-              environmentOverrideURL: this.environmentOverrideURL
+              environmentOverrideURL: this.environmentOverrideURL,
+              handledEvents: _classPrivateFieldGet(this, _handledEvents)
             });
             break;
         }
@@ -214,6 +221,7 @@ class MetaRIBBITConnect {
     this.language = language;
     this.environment = environment;
     this.environmentOverrideURL = environmentOverrideURL;
+
     //if(!settings || settings.resize == null) this.settings.resize = this.isInline
 
     if (!_classPrivateFieldGet(this, _initialized)) this.initFrame();

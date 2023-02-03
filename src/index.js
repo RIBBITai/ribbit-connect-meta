@@ -12,6 +12,7 @@ export default class MetaRIBBITConnect {
 
     CONNECTEvents = ['launch','exit','complete','bankLoginSelected','manualEnrollmentSelected','noAccountsFound','bankNotFound','bankLogin','bankManual', 'linkOpen']
 
+    #handledEvents = []
     #messageCallbacks = []
     #width = minWidth
     #height = startHeight
@@ -42,6 +43,7 @@ export default class MetaRIBBITConnect {
         this.language = language;
         this.environment = environment;
         this.environmentOverrideURL = environmentOverrideURL;
+
         //if(!settings || settings.resize == null) this.settings.resize = this.isInline
 
         if(!this.#initialized) this.initFrame();
@@ -92,6 +94,7 @@ export default class MetaRIBBITConnect {
 
     onCallbacks = []
     on = (eventName, callback) => {
+        this.#handledEvents.push(eventName)
         this.onCallbacks.push({ eventName, callback })
     }
 
@@ -170,7 +173,8 @@ export default class MetaRIBBITConnect {
                     fullscreen: this.fullscreen,
                     language: this.language,
                     environment: this.environment,
-                    environmentOverrideURL: this.environmentOverrideURL
+                    environmentOverrideURL: this.environmentOverrideURL,
+                    handledEvents: this.#handledEvents
                 })
                 break;
         }
